@@ -1,4 +1,4 @@
-from main_app.models import Employee, Department
+from main_app.models import Employee, Department, Project
 
 from django.contrib import admin
 
@@ -6,3 +6,4 @@ from django.contrib import admin
 
 admin.site.register(Employee)
 admin.site.register(Department)
+admin.site.register(Project)

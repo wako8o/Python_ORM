@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 
 
@@ -23,3 +25,14 @@ class Department(models.Model):
     employees_count = models.IntegerField(default=1, verbose_name="Employees Count")
     location = models.CharField(max_length=20, choices=Choices.choices)
     last_edited_on = models.DateTimeField(auto_now=True)
+
+class Project(models.Model):
+
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField()
+    budget = models.DecimalField(max_digits=10, decimal_places=2)
+    duration_in_days = models.IntegerField(default=0, verbose_name="Duration in Days")
+    estimated_hours = models.FloatField(default=0, verbose_name="Estimated Hours")
+    start_date = models.DateField(default=date.today)
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_edited_on = models.DateTimeField(auto_now_add=True)
