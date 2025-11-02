@@ -11,7 +11,6 @@ Python ORM е бърз, лек и асинхронен обектно-релац
 ## Основни функции
 - Асинхронни заявки
 - CRUD API
-- Валидация с pydantic
 - ForeignKey, ManyToMany релации
 - Миграции на схемите
 
@@ -21,24 +20,34 @@ pip install python-orm
 
 ## Начално използване
 
-from python_orm import Model, IntegerField, StringField
+from python_orm import Model
 
 class User(Model):
-id = IntegerField(primary_key=True)
-name = StringField()
-email = StringField(unique=True)
-Създаване на нов запис
 
-user = User(name="Ivan", email="ivan@example.com")
-user.save()
+name = models.CharField(max_length= 30)
 
-found = User.filter(name="Ivan").first()
-print(found)
+email_address = models.EmailField()
 
-## Конфигуриране
+birth_date = models.DateField()
 
-from python_orm import connect
-connect(db_uri="postgres://user:pass@localhost:5432/mydb")
+works_full_time = models.BooleanField()
+
+created_on = models.DateTimeField(auto_now_add=True)
+
+
+## Конфигуриране на връзка с база данни
+
+DATABASES = {
+
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "*****", 
+        "USER": "*****",
+        "PASSWORD": "*****",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 
 Моделите се съхраняват в папката `models/`.
 
