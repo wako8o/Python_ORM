@@ -17,7 +17,7 @@ class EventRegistrationAdmin(admin.ModelAdmin):
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'director', 'release_year', 'genre')
     list_filter = ('release_year', 'genre')
-    search_fielder = ('title', 'director')
+    search_fields = ('title', 'director')
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
