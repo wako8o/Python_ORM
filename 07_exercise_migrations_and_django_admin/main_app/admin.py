@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main_app.models import Shoe, EventRegistration, Movie, Student, Supplier, Course
+from main_app.models import Shoe, EventRegistration, Movie, Student, Supplier, Course, Order
 
 
 # @admin.register(Shoe)
@@ -58,3 +58,7 @@ class CourseAdmin(admin.ModelAdmin):
     ("Description",
      {'fields':('description',)}),
     )
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    pass

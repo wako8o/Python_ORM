@@ -184,6 +184,50 @@ class Smartphone(models.Model):
     )
 
 
+class Order(models.Model):
 
+    class Choices(models.TextChoices):
+        Pending = 'Pending_db','Pending'
+        Completed = 'Completed_db', 'Completed'
+        Cancelled = 'Cancelled_db', 'Cancelled'
+
+    product_name = models.CharField(
+        max_length=30,
+    )
+
+    costumer_name = models.CharField(
+        max_length=100,
+    )
+
+    order_date = models.DateField()
+
+    status = models.CharField(
+        max_length=30,
+        choices=Choices.choices,
+    )
+
+    amount = models.PositiveIntegerField(
+        default=1,
+    )
+
+    product_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
+
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+
+    warranty = models.CharField(
+        default="No warranty",
+    )
+
+    delivery = models.DateField(
+        blank=True,
+        null=True,
+    )
 
 
