@@ -6,7 +6,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 # Import your models here
-from main_app.models import Pet, Artifact
+from main_app.models import Pet, Artifact, Location
 
 
 def create_pet(name, species):
@@ -50,3 +50,30 @@ def rename_artifact(artifact: Artifact, new_name: str):
 def delete_all_artifacts():
 
     Artifact.objects.all().delete()
+
+
+def show_all_locations():
+
+    locations = Location.objects.all().order_by('-id')
+
+    return '\n'.join(f"{location.name} has a population of {location.population}!"
+                     for location in locations)
+
+
+def new_capital():
+
+    # Location.objects.first().update(is_capital=True)
+
+    location = Location.objects.first()
+    location.is_capital = True
+    location.save()
+
+def get_capitals():
+
+    location = Location.objects.filter(is_capital=True).values('name')
+    return location
+
+
+def delete_first_location():
+
+    Location.objects.first().delete()
