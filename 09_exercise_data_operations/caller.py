@@ -8,7 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 # Import your models here
-from main_app.models import Pet, Artifact, Location, Car
+from main_app.models import Pet, Artifact, Location, Car, Task
 
 
 def create_pet(name, species):
@@ -38,7 +38,13 @@ def create_pet(name, species):
 
 def create_artifact(name: str, origin: str, age: int, description: str, is_magical: bool):
 
-    Artifact.objects.create(name=name, origin=origin, age=age, description=description, is_magical=is_magical)
+    Artifact.objects.create(
+        name=name,
+        origin=origin,
+        age=age,
+        description=description,
+        is_magical=is_magical
+    )
 
     return f"The artifact {name} is {age} years old!"
 
@@ -100,3 +106,46 @@ def get_recent_cars():
 def delete_last_car():
 
     Car.objects.last().delete()
+
+
+def show_unfinished_tasks():
+
+    task = Task.objects.all()
+
+    return '\n'.join(
+        f"Task - {t.title} needs to be done until {t.due_date}!"
+        for t in task if not t.is_finished
+    )
+
+def complete_odd_tasks():
+
+    task = Task.objects.all()
+    for t in task:
+        if t.id % 2 != 0:
+            t.is_finished = True
+            t.save()
+
+def encode_and_replace(text: str, task_title: str):
+
+    task = Task.objects.all()
+    encoded = ''.join(chr(ord(x) - 3) for x in text)
+
+    for t in task :
+        if t.title == task_title:
+            t.description = encoded
+            t.save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
