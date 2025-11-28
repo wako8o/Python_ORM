@@ -83,3 +83,29 @@ class Task(models.Model):
         default=False,
     )
 
+
+class HotelRoom(models.Model):
+    class RoomType(models.TextChoices):
+        Standard = 'Standard', 'Standard'
+        Deluxe = 'Deluxe', 'Deluxe'
+        Suite = 'Suite', 'Suite'
+
+    room_number = models.PositiveIntegerField()
+
+    room_type = models.CharField(
+        max_length=10,
+        choices=RoomType.choices,
+    )
+
+    capacity = models.PositiveIntegerField()
+
+    amenities = models.TextField()
+
+    price_per_night = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
+
+    is_reserved = models.BooleanField(
+        default=False,
+    )
