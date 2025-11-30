@@ -1,5 +1,7 @@
 from django.db import models
 
+from main_app.choices import RoomType, CharacterTypeChoices
+
 
 class Pet(models.Model):
 
@@ -85,10 +87,7 @@ class Task(models.Model):
 
 
 class HotelRoom(models.Model):
-    class RoomType(models.TextChoices):
-        Standard = 'Standard', 'Standard'
-        Deluxe = 'Deluxe', 'Deluxe'
-        Suite = 'Suite', 'Suite'
+
 
     room_number = models.PositiveIntegerField()
 
@@ -109,3 +108,28 @@ class HotelRoom(models.Model):
     is_reserved = models.BooleanField(
         default=False,
     )
+
+
+class Character(models.Model):
+
+    name = models.CharField(
+        max_length=100,
+    )
+
+    class_name = models.CharField(
+        max_length=20,
+        choices=CharacterTypeChoices.choices,
+    )
+
+    level = models.PositiveIntegerField()
+
+    strength = models.PositiveIntegerField()
+
+    dexterity = models.PositiveIntegerField()
+
+    intelligence = models.PositiveIntegerField()
+
+    hit_points = models.PositiveIntegerField()
+
+    inventory = models.TextField()
+
