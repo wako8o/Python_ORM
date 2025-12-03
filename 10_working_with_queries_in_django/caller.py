@@ -75,3 +75,19 @@ def delete_review_by_id(review_id):
     delete_id = (Review.objects.get(id=review_id))
     delete_id.delete()
     return f"Review by {delete_id.reviewer_name} was deleted"
+
+
+def filter_authors_by_nationalities(nationality):
+    authors = Author.objects.filter(nationality=nationality).order_by('first_name', 'last_name')
+    return '\n'.join(f"{x.biography}" if x.biography is not None else f"{x.first_name} {x.last_name}" for x in authors)
+
+def filter_authors_by_birth_year(birth_year, year):
+    author = Author.objects.filter(birth_date__year__range=(birth_year, year)).order_by('-birth_date')
+    return '\n'.join(f"{a.birth_date}: {a.first_name} {a.last_name}" for a in author)
+
+
+def change_reviewer_name(name, now_name):
+    Review.objects.filter(reviewer_name=name).update(reviewer_name=now_name)
+
+    return Review.objects.all()
+
