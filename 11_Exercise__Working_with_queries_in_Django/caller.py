@@ -43,6 +43,8 @@ def update_operation_systems():
     Laptop.objects.filter(brand='Apple').update(operation_system='MAC_OS')
     Laptop.objects.filter(brand__in=['Dell', 'Acer']).update(operation_system='LINUX')
     Laptop.objects.filter(brand='Lenovo').update(operation_system='CHROME_OS')
+
+
     # Laptop.objects.update(
     #     operation_system=Case(
     #         When(brand=LaptopChoices.ASUS, then=Value(LaptopOperationSystem.WINDOWS)),
