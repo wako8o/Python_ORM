@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chess Player</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Chess</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Difficulty</th>
+                <th>Location</th>
+                <th>Boss name</th>
+                <th>Recommended level</th>
+                <th>Boss health</th>
+                <th>Reward</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in zone %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.name }}</td>
+                <td>{{ d.difficulty }}</td>
+                <td>{{ d.location }}</td>
+                <td>{{ d.boss_name }}</td>
+                <td>{{ d.recommended_level }}</td>
+                <td>{{ d.boss_health }}</td>
+                <td>{{ d.reward }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No chess found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
