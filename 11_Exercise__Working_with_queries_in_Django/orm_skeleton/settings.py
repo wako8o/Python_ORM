@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_app',
+
 ]
 
 MIDDLEWARE = [
@@ -67,9 +68,9 @@ WSGI_APPLICATION = 'orm_skeleton.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "",
-        "USER": "",
-        "PASSWORD": "",
+        "NAME": "orm_11",
+        "USER": "emil",
+        "PASSWORD": "pgadmin",
         "HOST": "localhost",
         "PORT": "5432",
     }
