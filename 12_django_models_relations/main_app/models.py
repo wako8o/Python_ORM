@@ -39,3 +39,10 @@ class StudentEnrollment(models.Model):
 
     def __str__(self):
         return f'{self.student} enrolled in {self.subject} on {self.enrollment_date}'
+
+class LecturerProfile(models.Model):
+
+    lecturer = models.OneToOneField(Lecturer, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
+    bio = models.TextField(blank=True, null=True)
+    office_location = models.CharField(max_length=100, blank=True, null=True)
