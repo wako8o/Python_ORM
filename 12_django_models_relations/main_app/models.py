@@ -1,5 +1,10 @@
+
+
 from django.db import models
 from django.db.models import SET_NULL
+from django.utils import timezone
+
+from main_app.choices import StudentGradeChoices
 
 
 # Create your models here.
@@ -16,3 +21,21 @@ class Subject(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=10)
     lecturer = models.ForeignKey(Lecturer, on_delete=SET_NULL, null=True, blank=True)
+
+class Student(models.Model):
+
+    student_id = models.CharField(max_length=10, primary_key=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    birth_date = models.DateField()
+    email = models.EmailField(unique=True)
+    subjects = models.ManyToManyField(Subject, through='StudentEnrollment')
+
+class StudentEnrollment(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    enrollment_date = models.DateField(default=timezone.now)
+    grade = models.CharField(max_length=1, choices=StudentGradeChoices.choices)
+
+    def __str__(self):
+        return f'{self.student} enrolled in {self.subject} on {self.enrollment_date}'
