@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 import django
 from django.db.models import Avg
@@ -7,7 +7,8 @@ from django.db.models import Avg
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
-from main_app.models import Author, Book, Song, Artist, Product, Review, Driver, DrivingLicense
+from main_app.models import Author, Book, Song, Artist, Product, Review, Driver, DrivingLicense, Owner, Car, \
+    Registration
 
 
 def show_all_authors_with_their_books():
@@ -90,4 +91,24 @@ def get_drivers_with_expired_licenses(due_date: date):
     #     license__issue_date__lt=due_date - timedelta(365),
     # )
 
+
+def register_car_by_owner(owner: Owner):
+    car = Car.objects.filter(registration__isnull=True).first()
+    registration = Registration.objects.filter(car__isnull=True).first()
+
+    car.owner = owner
+    car.registration = registration
+
+    car.save()
+
+    registration.registration_date = datetime.today()
+    registration.car = car
+
+    registration.save()
+
+    return (
+        f"Successfully registered {car.model} to "
+        f"{owner.name} with registration number "
+        f"{registration.registration_number}."
+    )
 
