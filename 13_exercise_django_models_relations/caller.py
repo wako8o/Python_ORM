@@ -1,11 +1,13 @@
 import os
+from datetime import timedelta, date
+
 import django
 from django.db.models import Avg
 
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
-from main_app.models import Author, Book, Song, Artist, Product, Review
+from main_app.models import Author, Book, Song, Artist, Product, Review, Driver, DrivingLicense
 
 
 def show_all_authors_with_their_books():
@@ -59,3 +61,33 @@ def get_products_with_no_reviews():
 
 def delete_products_without_reviews():
     Product.objects.filter(reviews__isnull=True).delete()
+
+
+def calculate_licenses_expiration_dates():
+    expiration_date = 365
+    driving_license = DrivingLicense.objects.all().order_by('-license_number')
+    result = []
+
+    for license in driving_license:
+        expire = license.issue_date + timedelta(days=expiration_date)
+        result.append(f"License with number: {license.license_number} expires on {expire}!")
+    return '\n'.join(result)
+
+    # licenses = DrivingLicense.objects.order_by('-license_number')
+    # return "\n".join(str(l) for l in licenses)
+
+def get_drivers_with_expired_licenses(due_date: date):
+    expired_licenses = DrivingLicense.objects.all()
+    result = []
+
+    for license in expired_licenses:
+        expire = license.issue_date + timedelta(days=365)
+        if expire < due_date:
+            result.append(license.driver)
+    return result
+
+    return Driver.objects.filter(
+        license__issue_date__lt=due_date - timedelta(365),
+    )
+
+
