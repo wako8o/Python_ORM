@@ -1,11 +1,12 @@
 import os
 import django
-
+from django.db.models import Avg
 
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
-from main_app.models import Author, Book, Song, Artist
+from main_app.models import Author, Book, Song, Artist, Product, Review
+
 
 def show_all_authors_with_their_books():
     authors = Author.objects.all()
@@ -41,3 +42,20 @@ def remove_song_from_artist(artist_name: str, song_title: str):
     artist.songs.remove(song)
 
 
+def calculate_average_rating_for_product_by_name(product_name: str):
+    return Review.objects.filter(product__name=product_name).aggregate(avg_rating=Avg('rating'))['avg_rating']
+
+    # product = Product.objects.get(name=product_name)
+    # reviews = product.reviews.all()
+    #
+    # avg_score = sum(r.rating for r in reviews) / len(reviews)
+    # return avg_score
+
+def get_reviews_with_high_ratings(threshold: int):
+    return Review.objects.filter(rating__gte=threshold)
+
+def get_products_with_no_reviews():
+    return Product.objects.filter(reviews__isnull=True).order_by('-name')
+
+def delete_products_without_reviews():
+    Product.objects.filter(reviews__isnull=True).delete()
