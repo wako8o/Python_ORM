@@ -86,8 +86,8 @@ def get_drivers_with_expired_licenses(due_date: date):
             result.append(license.driver)
     return result
 
-    return Driver.objects.filter(
-        license__issue_date__lt=due_date - timedelta(365),
-    )
+    # return Driver.objects.filter(
+    #     license__issue_date__lt=due_date - timedelta(365),
+    # )
 
 
