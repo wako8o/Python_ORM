@@ -6,12 +6,7 @@ from datetime import date
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-# Import your models here
 from main_app.models import Student
-# Run and print your queries
-...
-''
-...
 
 def add_students():
     students_1 = Student.objects.create(
