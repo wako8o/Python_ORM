@@ -1,0 +1,1 @@
+zip -r em_pro.zip . -x "*.idea*" -x "*.venv*" -x"*__pycache__*"

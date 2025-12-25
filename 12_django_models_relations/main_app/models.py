@@ -46,3 +46,4 @@ class LecturerProfile(models.Model):
     email = models.EmailField(unique=True)
     bio = models.TextField(blank=True, null=True)
     office_location = models.CharField(max_length=100, blank=True, null=True)
+
