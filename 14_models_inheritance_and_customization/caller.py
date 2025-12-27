@@ -10,11 +10,9 @@ from main_app.models import Animal, Mammal, Bird, Reptile, ZooKeeper, Veterinari
 
 
 def create_db():
-    is_proxy = ZooDisplayAnimal._meta.proxy
-
-    if is_proxy:
-        print("ZooDisplayAnimal is a proxy model.")
-    else:
-        print("ZooDisplayAnimal is not a proxy model.")
+    all_animals_info = ZooDisplayAnimal.objects.all()
+    for a in all_animals_info:
+        print(a.display_info())
+        print(a.is_endangered())
 create_db()
 
