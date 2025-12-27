@@ -1,12 +1,20 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from main_app.choices import ZooKeeperChoices
+from datetime import date
 
 class Animal(models.Model):
     name = models.CharField(max_length=100)
     species = models.CharField(max_length=100)
     birth_date = models.DateField()
     sound = models.CharField(max_length=100)
+
+    @property
+    def age(self):
+        today = date.today()
+        age = today - self.birth_date
+        return age.days // 365
+
 
 class Mammal(Animal):
     fur_color = models.CharField(max_length=50)

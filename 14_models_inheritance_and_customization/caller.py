@@ -1,4 +1,6 @@
 import os
+from datetime import date, timedelta
+
 import django
 
 # Set up Django
@@ -10,9 +12,6 @@ from main_app.models import Animal, Mammal, Bird, Reptile, ZooKeeper, Veterinari
 
 
 def create_db():
-    all_animals_info = ZooDisplayAnimal.objects.all()
-    for a in all_animals_info:
-        print(a.display_info())
-        print(a.is_endangered())
+   pass
 create_db()
 
