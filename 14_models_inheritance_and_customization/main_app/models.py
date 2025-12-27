@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from main_app.choices import ZooKeeperChoices
 from datetime import date
+from main_app.fields import BooleanChoiceField
 
 class Animal(models.Model):
     name = models.CharField(max_length=100)
@@ -48,7 +49,7 @@ class ZooKeeper(Employee):
 
 class Veterinarian(Employee):
     license_number = models.CharField(max_length=10)
-
+    availability = BooleanChoiceField()
 
 class ZooDisplayAnimal(Animal):
     def display_info(self):
