@@ -1,3 +1,6 @@
+from lib2to3.pygram import python_grammar
+
+from django.core.exceptions import ValidationError
 from django.db import models
 
 class BaseCharacter(models.Model):
@@ -77,4 +80,27 @@ class Message(models.Model):
         return new_message
 
 
+class StudentIDField(models.PositiveIntegerField):
+
+    def to_python(self, value):
+        try:
+            return super().to_python(value)
+        except ValidationError:
+            raise ValueError("Invalid input for student ID")
+
+    def get_prep_value(self, value):
+        try:
+            value = super().get_prep_value(value)
+        except ValueError as e:
+            raise e.__class__("Invalid input for student ID") from e
+
+        if value <= 0:
+            raise ValidationError("ID cannot be less than or equal to zero")
+
+        return value
+
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+    student_id = StudentIDField()
 
