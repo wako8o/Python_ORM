@@ -43,3 +43,21 @@ class Menu(models.Model):
     )
 
     restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE)
+
+
+class RestaurantReview(models.Model):
+    reviewer_name = models.CharField(max_length=100)
+    restaurant = models.ForeignKey(to=Restaurant, on_delete=models.CASCADE)
+    review_content = models.TextField()
+    rating = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(5)
+    ])
+
+    class Meta:
+        ordering = ['-rating']
+        verbose_name = 'Restaurant Review'
+        verbose_name_plural = 'Restaurant Reviews'
+        unique_together = ('restaurant', 'reviewer_name')
+
+    def __str__(self):
+        return f"{self.reviewer_name} - {self.restaurant} ({self.rating})"
