@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lpqf+u&iocimxwp@!=tkv0i$w6jb9*xo4g1dprhb!2rnztan0i'
+SECRET_KEY = 'django-insecure-xv8(d8zs#i%fq-d^tc1a6v=d8xcv9@09v-ojs#+r7)w3(qb(b7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -65,14 +65,13 @@ WSGI_APPLICATION = 'orm_skeleton.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "database_name_16",
-        "USER": "emil",
-        "PASSWORD": "pgadmin",
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
