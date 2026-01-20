@@ -30,3 +30,13 @@ class PhoneNumberValidator:
     def __call__(self, value):
         if not re.match('^\+359\{9}$', value):
             raise ValidationError(message=self.message)
+
+
+# @deconstructible
+# class BookAuthorName:
+#     def __init__(self, message):
+#         self.message = message
+#
+#     def __call__(self, value):
+#         if len(value) < 5:
+#             raise ValidationError(message=self.message)
