@@ -1,11 +1,10 @@
 from decimal import Decimal
-from itertools import product
-
 from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models
 
-from main_app.validators import PhoneNumberValidator, ValidateCustomerName
 
+from main_app.validators import PhoneNumberValidator, ValidateCustomerName
+from main_app.mixin import RechargeEnergyMixin
 
 class Customer(models.Model):
     name = models.CharField(
@@ -122,6 +121,64 @@ class DiscountedProduct(Product):
 
     def calculate_price_without_discount(self):
         return Decimal(str(self.price)) * (1 + self.ORIGINAL_PRICE)
+
+    class Meta:
+        proxy = True
+
+
+class Hero(models.Model, RechargeEnergyMixin):
+    ENERGY_DECREASES = 0
+
+    name = models.CharField(max_length=100)
+    hero_title = models.CharField(max_length=100)
+    energy = models.PositiveIntegerField()
+
+    @property
+    def energy_max_message(self):
+        return ''
+
+    @property
+    def energy_min_message(self):
+        return ''
+
+    def hellp_def(self):
+        if self.energy < self.ENERGY_DECREASES:
+            return self.energy_max_message
+
+        self.energy = max(self.energy - self.ENERGY_DECREASES, 1)
+
+        return self.energy_min_message
+
+class SpiderHero(Hero):
+    ENERGY_DECREASES = 80
+
+    def swing_from_buildings(self):
+        return self.hellp_def()
+
+    @property
+    def energy_max_message(self):
+        return f"{self.name} as Spider Hero is out of web shooter fluid"
+
+    @property
+    def energy_min_message(self):
+        return f"{self.name} as Spider Hero swings from buildings using web shooters"
+
+    class Meta:
+        proxy = True
+
+class FlashHero(Hero):
+    ENERGY_DECREASES = 65
+
+    def run_at_super_speed(self):
+        return self.hellp_def()
+
+    @property
+    def energy_max_message(self):
+        return f"{self.name} as Flash Hero needs to recharge the speed force"
+
+    @property
+    def energy_min_message(self):
+        return f"{self.name} as Flash Hero runs at lightning speed, saving the day"
 
     class Meta:
         proxy = True
