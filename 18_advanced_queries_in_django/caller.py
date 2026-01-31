@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 from functools import total_ordering
 
 import django
@@ -50,7 +51,30 @@ def filter_products():
         result.append(f"{product.name}: {product.price}lv.")
     return '\n'.join(result)
 
+def give_discount():
+    discount = Decimal("0.7")
+    products_price = Product.objects.filter(is_available=True)
+
+    result_update = []
+    for product in products_price:
+        if product.price > 3.00:
+            product.price *= Decimal(discount)
+            result_update.append(product)
+
+    if result_update:
+        Product.objects.bulk_update(result_update, ['price'])
+
+    products_sorted = Product.objects.filter(is_available=True).order_by("-price", 'name')
+    result = []
+    for product in products_sorted:
+        result.append(f"{product.name}: {product.price}lv.")
+
+
+    return '\n'.join(result)
+
+
 # print(product_quantity_ordered())
 # print(ordered_products_per_customer())
-print(filter_products())
+# print(filter_products())
+print(give_discount())
 
