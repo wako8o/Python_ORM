@@ -1,5 +1,8 @@
 import os
+from functools import total_ordering
+
 import django
+from django.db.models import Count, Sum
 
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
@@ -9,5 +12,17 @@ django.setup()
 from main_app.models import Product, Category, Customer, Order, OrderProduct
 
 
+def product_quantity_ordered():
+    products = (OrderProduct.objects.values('product__name')
+    .annotate(total_quantity=Sum('quantity'))
+    .filter(total_quantity__gt=0)
+    .order_by("-total_quantity", "product__name")
+    )
 
+    result = []
+    for product in products:
+
+        result.append(f"Quantity ordered of {product['product__name']}: {product['total_quantity']}")
+    return '\n'.join(result)
+print(product_quantity_ordered())
 
