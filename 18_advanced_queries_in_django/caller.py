@@ -42,7 +42,15 @@ def ordered_products_per_customer():
             result.append(f"- Product: {product.name}, Category: {category}")
     return '\n'.join(result)
 
+def filter_products():
+    products_price = Product.objects.filter(is_available=True, price__gt=3.00).order_by(
+        "-price", 'name')
+    result = []
+    for product in products_price:
+        result.append(f"{product.name}: {product.price}lv.")
+    return '\n'.join(result)
 
 # print(product_quantity_ordered())
 # print(ordered_products_per_customer())
+print(filter_products())
 
